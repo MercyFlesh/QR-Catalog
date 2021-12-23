@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QR_Catalog.Views.ItemsPage"
+             Title="{Binding Title}"
+             xmlns:local="clr-namespace:QR_Catalog.ViewModels"  
+             xmlns:model="clr-namespace:QR_Catalog.Models"
+             x:DataType="local:ItemsViewModel"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="ItemsEqPage">
+
+
+
+    <ContentPage.BindingContext>
+        <local:ItemsViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <ListView x:Name="ItemsListView" 
+                  ItemsSource="{Binding  Items}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  ItemTapped="ItemsListView_ItemTapped"
+                  CachingStrategy="RecycleElement"
+                  BackgroundColor="Transparent"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None">
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:Item">
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Delete" IsDestructive="True"
+                                          Command="{Binding Source={x:Reference ItemsEqPage}, Path=BindingContext.DeleteCommand}"
+                                          CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+
+                        <Grid Padding="10">
+                            <Frame CornerRadius="20" HasShadow="True">
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Text}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource ListItemTextStyle}" 
+                                        FontSize="16" />
+
+                                    <Label Text="{Binding Description}"
+                                        Style="{DynamicResource ListItemDetailTextStyle}"
+                                        FontSize="13" />
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </RefreshView>
+</ContentPage>
