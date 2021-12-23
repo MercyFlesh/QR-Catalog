@@ -1,25 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="QR_Catalog.Views.ItemsPage"
-             Title="{Binding Title}"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:local="clr-namespace:QR_Catalog.ViewModels"  
              xmlns:model="clr-namespace:QR_Catalog.Models"
              x:DataType="local:ItemsViewModel"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="QR_Catalog.Views.ItemsPage"
+             Title="{Binding Title}"
              x:Name="ItemsEqPage">
-
 
 
     <ContentPage.BindingContext>
         <local:ItemsViewModel/>
     </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
 
-    <RefreshView x:DataType="local:ItemsViewModel" Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+    <RefreshView x:DataType="local:ItemsViewModel" 
+                 Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <ListView x:Name="ItemsListView" 
                   ItemsSource="{Binding  Items}"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
@@ -28,6 +34,11 @@
                   BackgroundColor="Transparent"
                   HasUnevenRows="True"
                   SeparatorVisibility="None">
+
+            <ListView.Behaviors>
+                <xct:EventToCommandBehavior EventName="ItemSelected" Command="{Binding SelectCommand}" 
+                                            EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}"/>
+            </ListView.Behaviors>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Item">

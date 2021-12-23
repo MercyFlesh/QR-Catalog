@@ -21,18 +21,13 @@ namespace QR_Catalog.ViewModels
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public AsyncCommand<Item> DeleteCommand { get; }
-
-        //public ICommand DeleteCommand { get; }
+        public Command SelectCommand { get; }
 
         public Item SelectedItem
         {
             get => _selectedItem;
             set
             {
-                var messageService = DependencyService.Get<IMessageService>();
-                if (value != null && messageService != null)
-                    messageService.ShortAlert("db selected");
-
                 _selectedItem = value;
                 OnPropertyChanged();
             }
@@ -44,10 +39,9 @@ namespace QR_Catalog.ViewModels
 
             Items = new ObservableCollection<Item>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-            DeleteCommand = new AsyncCommand<Item>(DeleteItem);
-            //ItemTapped = new Command<Item>(OnItemSelected);
-
-            AddItemCommand = new Command(OnAddItem);
+            DeleteCommand = new AsyncCommand<Item>(OnItemDeleted);
+            SelectCommand = new Command(async (object item) => await OnItemSeleted(item));
+            AddItemCommand = new Command(async () => await OnAddItem());
         }
 
         async Task ExecuteLoadItemsCommand()
@@ -73,7 +67,7 @@ namespace QR_Catalog.ViewModels
             }
         }
 
-        private async Task DeleteItem(Item item)
+        private async Task OnItemDeleted(Item item)
         {
             if (item != null && await DataStore.DeleteItemAsync(item.Id))
             {
@@ -85,24 +79,25 @@ namespace QR_Catalog.ViewModels
             }
         }
 
+        public async Task OnItemSeleted(object obj)
+        {
+            Item item = obj as Item;
+            if (item == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
+        }
+
         public void OnAppearing()
         {
             IsBusy = true;
             SelectedItem = null;
         }
 
-        private async void OnAddItem(object obj)
+        private async Task OnAddItem()
         {
             await Shell.Current.GoToAsync(nameof(NewItemPage));
             await ExecuteLoadItemsCommand();
         }
-
-        /*async void OnItemSelected(Item item)
-        {
-            if (item == null)
-                return;
-            
-            await Shell.Current.GoToAsync($"{nameof(ItemDetailPage)}?{nameof(ItemDetailViewModel.ItemId)}={item.Id}");
-        }*/
     }
 }

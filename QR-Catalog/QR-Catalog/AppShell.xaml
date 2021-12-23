@@ -22,8 +22,7 @@
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="FlyoutItem" />
 
             <!--
-                Default Styles for all Flyout Items
-                https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
+                Default Styles Flyout Items
             -->
             <Style Class="FlyoutItemLabelStyle" TargetType="Label">
                 <Setter Property="TextColor" Value="White" />
@@ -53,7 +52,7 @@
             </Style>
 
             <!--
-                Custom Style you can apply to any Flyout Item
+                Custom Style Flyout Item
             -->
             <Style
                 ApplyToDerivedTypes="True"
