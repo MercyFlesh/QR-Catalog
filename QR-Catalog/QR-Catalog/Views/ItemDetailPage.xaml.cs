@@ -9,7 +9,7 @@ namespace QR_Catalog.Views
         public ItemDetailPage()
         {
             InitializeComponent();
-            BindingContext = new ItemDetailViewModel();
+            BindingContext = new DetailItemVM();
         }
     }
 }

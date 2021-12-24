@@ -4,14 +4,14 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:local="clr-namespace:QR_Catalog.ViewModels"  
              xmlns:model="clr-namespace:QR_Catalog.Models"
-             x:DataType="local:ItemsViewModel"
+             x:DataType="local:ListItemsVM"
              x:Class="QR_Catalog.Views.ItemsPage"
              Title="{Binding Title}"
              x:Name="ItemsEqPage">
 
 
     <ContentPage.BindingContext>
-        <local:ItemsViewModel/>
+        <local:ListItemsVM/>
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
@@ -24,7 +24,7 @@
         <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
     </ContentPage.ToolbarItems>
 
-    <RefreshView x:DataType="local:ItemsViewModel" 
+    <RefreshView x:DataType="local:ListItemsVM" 
                  Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
         <ListView x:Name="ItemsListView" 
                   ItemsSource="{Binding  Items}"
@@ -41,7 +41,7 @@
             </ListView.Behaviors>
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="model:Item">
+                <DataTemplate x:DataType="model:RemoteDB">
                     <ViewCell>
                         <ViewCell.ContextActions>
                             <MenuItem Text="Delete" IsDestructive="True"
@@ -52,12 +52,12 @@
                         <Grid Padding="10">
                             <Frame CornerRadius="20" HasShadow="True">
                                 <StackLayout Padding="10">
-                                    <Label Text="{Binding Text}" 
+                                    <Label Text="{Binding Name}" 
                                         LineBreakMode="NoWrap" 
                                         Style="{DynamicResource ListItemTextStyle}" 
                                         FontSize="16" />
 
-                                    <Label Text="{Binding Description}"
+                                    <Label Text="{Binding Tag}"
                                         Style="{DynamicResource ListItemDetailTextStyle}"
                                         FontSize="13" />
                                 </StackLayout>

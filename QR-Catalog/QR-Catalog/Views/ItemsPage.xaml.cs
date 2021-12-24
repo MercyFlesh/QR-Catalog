@@ -17,12 +17,12 @@ namespace QR_Catalog.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ItemsPage : ContentPage
     {
-        ItemsViewModel _viewModel;
+        ListItemsVM _viewModel;
 
         public ItemsPage()
         {
             InitializeComponent(); 
-            _viewModel = (ItemsViewModel)BindingContext;
+            _viewModel = (ListItemsVM)BindingContext;
         }
 
         protected override void OnAppearing()

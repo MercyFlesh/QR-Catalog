@@ -15,7 +15,7 @@ namespace QR_Catalog.Views
         public ItemUpdatePage()
         {
             InitializeComponent();
-            BindingContext = new ItemUpdateVM();
+            BindingContext = new UpdateItemVM();
         }
     }
 }

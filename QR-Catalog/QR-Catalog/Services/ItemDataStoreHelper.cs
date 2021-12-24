@@ -20,35 +20,35 @@ namespace QR_Catalog.Services
                 var databasePath = Path.Combine(FileSystem.AppDataDirectory, "MyData.db");
                 db = new SQLiteAsyncConnection(databasePath);
 
-                await db.CreateTableAsync<Item>();
+                await db.CreateTableAsync<RemoteDB>();
             }
         }
 
-        public static async Task<int> AddItemAsync(Item item)
+        public static async Task<int> AddItemAsync(RemoteDB item)
         {
             await Init();
-            return await db.InsertAsync(new Item { Text = item.Text, Description = item.Description });
+            return await db.InsertAsync(item);
         }
 
-        public static async Task<int> DeleteItemAsync(int id)
+        public static async Task<int> DeleteItemAsync(string tag)
         {
             await Init();
-            return await db.DeleteAsync<Item>(id);
+            return await db.DeleteAsync<RemoteDB>(tag);
         }
 
-        public static async Task<Item> GetItemAsync(int id)
+        public static async Task<RemoteDB> GetItemAsync(string tag)
         {
             await Init();
-            return await db.GetAsync<Item>(id);
+            return await db.GetAsync<RemoteDB>(tag);
         }
 
-        public static async Task<IEnumerable<Item>> GetItemsAsync()
+        public static async Task<IEnumerable<RemoteDB>> GetItemsAsync()
         {
             await Init();
-            return await db.Table<Item>().ToListAsync();
+            return await db.Table<RemoteDB>().ToListAsync();
         }
 
-        public static async Task<int> UpdateItemAsync(Item item)
+        public static async Task<int> UpdateItemAsync(RemoteDB item)
         {
             await Init();
             return await db.UpdateAsync(item);

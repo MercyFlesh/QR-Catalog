@@ -10,12 +10,22 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Update" Command="{Binding UpdateItemCommand}" CommandParameter="{Binding .}"/>
     </ContentPage.ToolbarItems>
-    
-    <StackLayout Spacing="20" Padding="15">
-        <Label Text="Text:" FontSize="Medium" />
-        <Label Text="{Binding Text}" FontSize="Small"/>
-        <Label Text="Description:" FontSize="Medium" />
-        <Label Text="{Binding Description}" FontSize="Small"/>
-    </StackLayout>
-    
+    <ScrollView>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Name:" FontSize="Medium" />
+            <Label Text="{Binding Name}" FontSize="Small"/>
+            <Label Text="Tag:" FontSize="Medium" />
+            <Label Text="{Binding Tag}" FontSize="Small"/>
+            <Label Text="Host:" FontSize="Medium" />
+            <Label Text="{Binding Host}" FontSize="Small"/>
+            <Label Text="Port:" FontSize="Medium" />
+            <Label Text="{Binding Port}" FontSize="Small"/>
+            <Label Text="Database:" FontSize="Medium" />
+            <Label Text="{Binding Database}" FontSize="Small"/>
+            <Label Text="User:" FontSize="Medium" />
+            <Label Text="{Binding User}" FontSize="Small"/>
+            <Label Text="Password:" FontSize="Medium" />
+            <Label Text="{Binding Password}" FontSize="Small"/>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
