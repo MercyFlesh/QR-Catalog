@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using QR_Catalog.Services;
 
 namespace QR_Catalog.ViewModels
 {
@@ -49,12 +50,11 @@ namespace QR_Catalog.ViewModels
         {
             Item newItem = new Item()
             {
-                Id = Guid.NewGuid().ToString(),
                 Text = Text,
                 Description = Description
             };
 
-            await DataStore.AddItemAsync(newItem);
+            await ItemDataStoreHelper.AddItemAsync(newItem);
             await Shell.Current.GoToAsync("..");
         }
     }

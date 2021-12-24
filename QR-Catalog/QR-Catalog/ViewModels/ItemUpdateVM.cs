@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using QR_Catalog.Services;
 
 
 namespace QR_Catalog.ViewModels
@@ -11,13 +12,13 @@ namespace QR_Catalog.ViewModels
     public class ItemUpdateVM : BaseViewModel
     {
         private Item item;
-        private string itemId;
+        private int itemId;
         private string text;
         private string description;
 
         public Command SaveItemCommand { get; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Text
         {
@@ -31,7 +32,7 @@ namespace QR_Catalog.ViewModels
             set { description = value; OnPropertyChanged(); }
         }
 
-        public string ItemId
+        public int ItemId
         {
             get
             {
@@ -49,11 +50,11 @@ namespace QR_Catalog.ViewModels
             SaveItemCommand = new Command(async() => await SaveItem());
         }
 
-        public async void LoadItemId(string itemId)
+        public async void LoadItemId(int itemId)
         {
             try
             {
-                item = await DataStore.GetItemAsync(itemId);
+                item = await ItemDataStoreHelper.GetItemAsync(itemId);
                 Id = item.Id;
                 Text = item.Text;
                 Description = item.Description;
@@ -69,7 +70,7 @@ namespace QR_Catalog.ViewModels
             //item.Text = Text;
             //item.Description = description;
             
-            await DataStore.UpdateItemAsync(new Item(){ Id = itemId, Text = text, Description = description });
+            await ItemDataStoreHelper.UpdateItemAsync(new Item(){ Id = itemId, Text = text, Description = description });
             await Shell.Current.GoToAsync("..");
         }
     }

@@ -12,8 +12,8 @@ namespace QR_Catalog
         public App()
         {
             InitializeComponent();
+            ItemDataStoreHelper.Init();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

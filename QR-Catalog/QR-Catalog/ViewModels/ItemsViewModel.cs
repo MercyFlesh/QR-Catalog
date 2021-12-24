@@ -51,7 +51,7 @@ namespace QR_Catalog.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await ItemDataStoreHelper.GetItemsAsync();
                 foreach (var item in items)
                 {
                     Items.Add(item);
@@ -69,7 +69,7 @@ namespace QR_Catalog.ViewModels
 
         private async Task OnItemDeleted(Item item)
         {
-            if (item != null && await DataStore.DeleteItemAsync(item.Id))
+            if (item != null && (await ItemDataStoreHelper.DeleteItemAsync(item.Id)) != 0)
             {
                 await ExecuteLoadItemsCommand();
 

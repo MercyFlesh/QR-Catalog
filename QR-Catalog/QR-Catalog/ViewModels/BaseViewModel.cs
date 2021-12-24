@@ -10,8 +10,6 @@ namespace QR_Catalog.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
-
         bool isBusy = false;
         string title = string.Empty;
         public bool IsBusy
@@ -25,19 +23,6 @@ namespace QR_Catalog.ViewModels
             get { return title; }
             set { title = value; OnPropertyChanged(); }
         }
-
-        /*protected bool SetProperty<T>(ref T backingStore, T value,
-            [CallerMemberName] string propertyName = "",
-            Action onChanged = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-            return true;
-        }*/
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
