@@ -13,8 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ItemUpdatePage.xaml.cs">
+      <DependentUpon>ItemUpdatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\ScannerPage.xaml.cs">
       <DependentUpon>ScannerPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\ItemUpdatePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

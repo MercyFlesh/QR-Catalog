@@ -16,8 +16,7 @@ namespace QR_Catalog.ViewModels
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
+            PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         private bool ValidateSave()
@@ -43,7 +42,6 @@ namespace QR_Catalog.ViewModels
 
         private async void OnCancel()
         {
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
 
@@ -57,8 +55,6 @@ namespace QR_Catalog.ViewModels
             };
 
             await DataStore.AddItemAsync(newItem);
-
-            // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");
         }
     }

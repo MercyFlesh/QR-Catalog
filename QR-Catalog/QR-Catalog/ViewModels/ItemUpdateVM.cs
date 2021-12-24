@@ -1,21 +1,21 @@
 ﻿using QR_Catalog.Models;
-using QR_Catalog.Views;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace QR_Catalog.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
-    public class ItemDetailViewModel : BaseViewModel
+    public class ItemUpdateVM : BaseViewModel
     {
         private Item item;
         private string itemId;
         private string text;
         private string description;
 
-        public Command UpdateItemCommand { get; }
+        public Command SaveItemCommand { get; }
 
         public string Id { get; set; }
 
@@ -44,9 +44,9 @@ namespace QR_Catalog.ViewModels
             }
         }
 
-        public ItemDetailViewModel()
+        public ItemUpdateVM()
         {
-            UpdateItemCommand = new Command(async (object obj) => await UpdateItem(obj));
+            SaveItemCommand = new Command(async() => await SaveItem());
         }
 
         public async void LoadItemId(string itemId)
@@ -64,9 +64,13 @@ namespace QR_Catalog.ViewModels
             }
         }
 
-        private async Task UpdateItem(object obj)
+        private async Task SaveItem()
         {
-            await Shell.Current.GoToAsync($"{nameof(ItemUpdatePage)}?{nameof(ItemUpdateVM.ItemId)}={item.Id}");
+            //item.Text = Text;
+            //item.Description = description;
+            
+            await DataStore.UpdateItemAsync(new Item(){ Id = itemId, Text = text, Description = description });
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

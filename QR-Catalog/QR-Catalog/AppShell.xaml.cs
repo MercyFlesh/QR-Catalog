@@ -13,6 +13,7 @@ namespace QR_Catalog
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(ItemUpdatePage), typeof(ItemUpdatePage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
