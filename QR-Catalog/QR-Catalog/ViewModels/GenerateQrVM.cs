@@ -1,13 +1,16 @@
 ﻿using QR_Catalog.Models;
 using QR_Catalog.Views;
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Data.Common;
-using Npgsql;
-using MySql.Data.MySqlClient;
+using System.Drawing;
+using System.Drawing.Imaging;
+using QRCoder;
 using QR_Catalog.Services;
+
 
 namespace QR_Catalog.ViewModels
 {
@@ -68,9 +71,9 @@ namespace QR_Catalog.ViewModels
                 messageService.ShortAlert(msg);
         }
 
-        public async Task LoadPositions()
+        private async Task LoadPositions()
         {
-            int id = -1;
+            int count = -1;
             //public.testdata
 
             IConnectionService test;
@@ -94,24 +97,44 @@ namespace QR_Catalog.ViewModels
                     await connection.OpenAsync();
                     using (var command = connection.CreateCommand())
                     {
-                        command.CommandText = $"SELECT * FROM {TableName} LIMIT 100;";
-                        using (var reader = await command.ExecuteReaderAsync())
+                        command.CommandText = $"SELECT COUNT(*) FROM {TableName};";
+                        count = Convert.ToInt32(command.ExecuteScalar());
+
+                        //command.CommandText = $"SELECT * FROM {TableName};";
+                        /*using (var reader = await command.ExecuteReaderAsync())
                         {
                             while (reader.Read())
                             {
                                 id = (int)reader["id"];
                             }
-                        }
+                        }*/
                     }
                 }
             }
             catch(Exception)
             {
-                SendMeassage("Reading error");
+                SendMeassage($"Reading error");
                 return;
             }
 
-            SendMeassage(id.ToString());
+            await GenerateQrById(count);
+        }
+
+        private async Task GenerateQrById(int countItems)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            for (int id = 1; id <= countItems; id++)
+            {
+                QRCodeData qrCodeData = qrGenerator.CreateQrCode($"{item.Tag}/{TableName}/{id}", QRCodeGenerator.ECCLevel.Q);
+                BitmapByteQRCode qrCode = new BitmapByteQRCode(qrCodeData);
+                byte[] qrCodeImageData = qrCode.GetGraphic(20);
+
+                var saveService = DependencyService.Get<ISaveService>();
+                if (saveService != null)
+                    await saveService.SaveByteArrayAsPNG(qrCodeImageData, item.Name.Replace(' ', '_'), id.ToString());
+            }
+
+            SendMeassage("All qr-codes saved");
         }
     }
 }
