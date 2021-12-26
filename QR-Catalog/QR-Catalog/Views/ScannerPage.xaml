@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="QR_Catalog.Views.ScannerPage"
              xmlns:vm="clr-namespace:QR_Catalog.ViewModels"
+             xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              Title="{Binding Title}">
     
     <ContentPage.BindingContext>
@@ -15,8 +16,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        
-    </Grid>
+    <StackLayout>
+        <Button x:Name="btnScan" Text="Scan" 
+                VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand"
+                Margin="40,0,40,0" 
+                Command="{Binding ScannerCommand}"/>
+    </StackLayout>
 
 </ContentPage>

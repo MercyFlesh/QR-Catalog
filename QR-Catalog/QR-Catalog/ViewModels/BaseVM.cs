@@ -24,6 +24,13 @@ namespace QR_Catalog.ViewModels
             set { title = value; OnPropertyChanged(); }
         }
 
+        protected void SendMeassage(string msg)
+        {
+            var messageService = DependencyService.Get<IMessageService>();
+            if (messageService != null)
+                messageService.ShortAlert(msg);
+        }
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")

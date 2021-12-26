@@ -12,7 +12,7 @@ namespace QR_Catalog
         public App()
         {
             InitializeComponent();
-            ItemDataStoreHelper.Init();
+            LocalDataStoreHelper.Init();
 
             MainPage = new AppShell();
         }

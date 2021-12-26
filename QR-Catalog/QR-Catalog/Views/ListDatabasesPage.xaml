@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:local="clr-namespace:QR_Catalog.ViewModels"  
+             xmlns:model="clr-namespace:QR_Catalog.Models"
+             x:DataType="local:ListDatabasesVM"
+             x:Class="QR_Catalog.Views.ListDatabasesPage"
+             Title="{Binding Title}"
+             x:Name="ItemsEqPage">
+
+
+    <ContentPage.BindingContext>
+        <local:ListDatabasesVM/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddItemCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <RefreshView x:DataType="local:ListDatabasesVM" 
+                 Command="{Binding LoadItemsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <ListView x:Name="ItemsListView" 
+                  ItemsSource="{Binding  Items}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  ItemTapped="ItemsListView_ItemTapped"
+                  CachingStrategy="RecycleElement"
+                  BackgroundColor="Transparent"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None">
+
+            <ListView.Behaviors>
+                <xct:EventToCommandBehavior EventName="ItemSelected" Command="{Binding SelectCommand}" 
+                                            EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}"/>
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="model:RemoteDB">
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Generate QR"
+                                          Command="{Binding Source={x:Reference ItemsEqPage}, Path=BindingContext.GenerateCommand}"
+                                          CommandParameter="{Binding .}"/>
+                            
+                            <MenuItem Text="Delete" IsDestructive="True"
+                                          Command="{Binding Source={x:Reference ItemsEqPage}, Path=BindingContext.DeleteCommand}"
+                                          CommandParameter="{Binding .}"/>
+                        </ViewCell.ContextActions>
+
+                        <Grid Padding="10">
+                            <Frame CornerRadius="20" HasShadow="True">
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Name}" 
+                                        LineBreakMode="NoWrap" 
+                                        Style="{DynamicResource ListItemTextStyle}" 
+                                        FontSize="16" />
+
+                                    <Label Text="{Binding Tag}"
+                                        Style="{DynamicResource ListItemDetailTextStyle}"
+                                        FontSize="13" />
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </RefreshView>
+</ContentPage>

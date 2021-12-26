@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="QR_Catalog.Views.LoadItemPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="Id:" FontSize="Medium" />
+                <Label Text="{Binding Id}" FontSize="Small"/>
+                <Label Text="Name:" FontSize="Medium" />
+                <Label Text="{Binding Name}" FontSize="Small"/>
+                <Label Text="Count:" FontSize="Medium" />
+                <Label Text="{Binding Count}" FontSize="Small"/>
+                <Label Text="Description:" FontSize="Medium" />
+                <Label Text="{Binding Description}" FontSize="Small"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

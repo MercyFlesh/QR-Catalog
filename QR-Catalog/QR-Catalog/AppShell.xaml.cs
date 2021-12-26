@@ -11,10 +11,11 @@ namespace QR_Catalog
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-            Routing.RegisterRoute(nameof(ItemUpdatePage), typeof(ItemUpdatePage));
+            Routing.RegisterRoute(nameof(DbDetailPage), typeof(DbDetailPage));
+            Routing.RegisterRoute(nameof(NewDbPage), typeof(NewDbPage));
+            Routing.RegisterRoute(nameof(UpdateDbPage), typeof(UpdateDbPage));
             Routing.RegisterRoute(nameof(GenerateQrCodesPage), typeof(GenerateQrCodesPage));
+            Routing.RegisterRoute(nameof(LoadItemPage), typeof(LoadItemPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

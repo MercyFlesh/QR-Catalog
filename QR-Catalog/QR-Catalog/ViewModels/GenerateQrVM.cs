@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Data.Common;
-using System.Drawing;
-using System.Drawing.Imaging;
 using QRCoder;
 using QR_Catalog.Services;
 
@@ -56,19 +54,12 @@ namespace QR_Catalog.ViewModels
         {
             try
             {
-                item = await ItemDataStoreHelper.GetItemAsync(tag);
+                item = await LocalDataStoreHelper.GetItemAsync(tag);
             }
             catch (Exception)
             {
                 Debug.WriteLine("Failed to Load Item");
             }
-        }
-
-        private void SendMeassage(string msg)
-        {
-            var messageService = DependencyService.Get<IMessageService>();
-            if (messageService != null)
-                messageService.ShortAlert(msg);
         }
 
         private async Task LoadPositions()
@@ -99,15 +90,6 @@ namespace QR_Catalog.ViewModels
                     {
                         command.CommandText = $"SELECT COUNT(*) FROM {TableName};";
                         count = Convert.ToInt32(command.ExecuteScalar());
-
-                        //command.CommandText = $"SELECT * FROM {TableName};";
-                        /*using (var reader = await command.ExecuteReaderAsync())
-                        {
-                            while (reader.Read())
-                            {
-                                id = (int)reader["id"];
-                            }
-                        }*/
                     }
                 }
             }
@@ -118,6 +100,7 @@ namespace QR_Catalog.ViewModels
             }
 
             await GenerateQrById(count);
+            await Shell.Current.GoToAsync("..");
         }
 
         private async Task GenerateQrById(int countItems)
