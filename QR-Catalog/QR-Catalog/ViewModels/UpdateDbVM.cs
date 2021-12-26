@@ -12,7 +12,8 @@ namespace QR_Catalog.ViewModels
     public class UpdateDbVM : BaseVM
     {
         private RemoteDB item;
-        private string tag;
+        private string tagKey;
+        private string scheme;
         private string name;
         private string host;
         private string port;
@@ -22,10 +23,10 @@ namespace QR_Catalog.ViewModels
 
         public Command SaveItemCommand { get; }
 
-        public string Tag
+        public string Scheme
         {
-            get => tag;
-            set { tag = value; OnPropertyChanged(); }
+            get => scheme;
+            set { scheme = value; OnPropertyChanged(); }
         }
         public string Name
         {
@@ -63,11 +64,11 @@ namespace QR_Catalog.ViewModels
         {
             get
             {
-                return tag;
+                return tagKey;
             }
             set
             {
-                tag = value;
+                tagKey = value;
                 LoadDbTag(value);
             }
         }
@@ -82,7 +83,7 @@ namespace QR_Catalog.ViewModels
             try
             {
                 item = await LocalDataStoreHelper.GetItemAsync(tag);
-                Tag = item.Tag;
+                Scheme = item.Scheme;
                 Name = item.Name;
                 Host = item.Host;
                 Port = item.Port;
@@ -100,8 +101,9 @@ namespace QR_Catalog.ViewModels
         {
             RemoteDB Item = new RemoteDB()
             {
-                Tag = tag,
+                Tag = tagKey,
                 Name = name,
+                Scheme = scheme,
                 Host = host,
                 Port = port,
                 Database = database,

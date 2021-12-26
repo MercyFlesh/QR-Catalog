@@ -14,6 +14,7 @@ namespace QR_Catalog.ViewModels
         private RemoteDB item;
         private string tag;
         private string name;
+        private string scheme;
         private string host;
         private string port;
         private string database;
@@ -22,10 +23,10 @@ namespace QR_Catalog.ViewModels
 
         public Command UpdateItemCommand { get; }
 
-        public string Tag
+        public string Scheme
         {
-            get => tag;
-            set { tag = value; OnPropertyChanged(); }
+            get => scheme;
+            set { scheme = value; OnPropertyChanged(); }
         }
         public string Name
         {
@@ -82,7 +83,7 @@ namespace QR_Catalog.ViewModels
             try
             {
                 item = await LocalDataStoreHelper.GetItemAsync(tag);
-                Tag = item.Tag;
+                Scheme = item.Scheme;
                 Name = item.Name;
                 Host = item.Host;
                 Port = item.Port;
