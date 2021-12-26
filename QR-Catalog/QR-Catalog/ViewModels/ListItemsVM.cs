@@ -21,6 +21,7 @@ namespace QR_Catalog.ViewModels
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
         public AsyncCommand<RemoteDB> DeleteCommand { get; }
+        public AsyncCommand<RemoteDB> GenerateCommand { get; }
         public Command SelectCommand { get; }
 
         public RemoteDB SelectedItem
@@ -40,6 +41,7 @@ namespace QR_Catalog.ViewModels
             Items = new ObservableCollection<RemoteDB>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
             DeleteCommand = new AsyncCommand<RemoteDB>(OnItemDeleted);
+            GenerateCommand = new AsyncCommand<RemoteDB>(OnGenerateQR);
             SelectCommand = new Command(async (object item) => await OnItemSeleted(item));
             AddItemCommand = new Command(async () => await OnAddItem());
         }
@@ -65,6 +67,15 @@ namespace QR_Catalog.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+
+        private async Task OnGenerateQR(RemoteDB item)
+        {
+            if (item == null)
+                return;
+
+            await Shell.Current.GoToAsync($"{nameof(GenerateQrCodesPage)}?{nameof(GenerateQrVM.DbTag)}={item.Tag}");
         }
 
         private async Task OnItemDeleted(RemoteDB item)

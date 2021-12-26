@@ -44,6 +44,10 @@
                 <DataTemplate x:DataType="model:RemoteDB">
                     <ViewCell>
                         <ViewCell.ContextActions>
+                            <MenuItem Text="Generate QR"
+                                          Command="{Binding Source={x:Reference ItemsEqPage}, Path=BindingContext.GenerateCommand}"
+                                          CommandParameter="{Binding .}"/>
+                            
                             <MenuItem Text="Delete" IsDestructive="True"
                                           Command="{Binding Source={x:Reference ItemsEqPage}, Path=BindingContext.DeleteCommand}"
                                           CommandParameter="{Binding .}"/>

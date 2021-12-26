@@ -12,12 +12,13 @@ namespace QR_Catalog.ViewModels
     {
         private string tag;
         private string name;
+        private string scheme;
         private string host;
         private string port;
         private string database;
         private string user;
         private string password;
-
+        
         private string uriStr;
 
         
@@ -53,13 +54,12 @@ namespace QR_Catalog.ViewModels
             try
             {
                 Uri uri = new Uri(uriStr);
-
+                scheme = uri.Scheme;
                 host = uri.Host;
                 port = uri.Port.ToString();
                 database = uri.LocalPath;
                 user = uri.UserInfo.Split(':')[0];
                 password = uri.UserInfo.Split(':')[1];
-
             }
             catch (Exception)
             {
@@ -76,6 +76,7 @@ namespace QR_Catalog.ViewModels
                 && !string.IsNullOrWhiteSpace(user)
                 && !string.IsNullOrWhiteSpace(password);
         }
+
         private async void OnCancel()
         {
             await Shell.Current.GoToAsync("..");
@@ -84,11 +85,12 @@ namespace QR_Catalog.ViewModels
         private async void OnSave()
         {
             if (ValidateSave())
-            {                
+            {
                 RemoteDB newDbItem = new RemoteDB()
                 {
                     Tag = tag,
                     Name = name,
+                    Scheme = scheme,
                     Host = host,
                     Port = port,
                     Database = database,

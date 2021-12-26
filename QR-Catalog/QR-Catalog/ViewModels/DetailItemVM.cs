@@ -4,6 +4,9 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Data.Common;
+using Npgsql;
+using MySql.Data.MySqlClient;
 using QR_Catalog.Services;
 
 namespace QR_Catalog.ViewModels

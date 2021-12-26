@@ -7,6 +7,7 @@ namespace QR_Catalog.Models
         [PrimaryKey, Unique]
         public string Tag { get; set; }
         public string Name { get; set; }
+        public string Scheme { get; set; }
         public string Host { get; set; }
         public string Port { get; set; }
         public string Database { get; set; }
@@ -16,5 +17,10 @@ namespace QR_Catalog.Models
         // </summary>
         public string User { get; set; }
         public string Password { get; set; }
+
+        public string GetConnectionString()
+        {
+            return null;
+        }
     }
 }

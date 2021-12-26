@@ -14,6 +14,7 @@ namespace QR_Catalog
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(ItemUpdatePage), typeof(ItemUpdatePage));
+            Routing.RegisterRoute(nameof(GenerateQrCodesPage), typeof(GenerateQrCodesPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
