@@ -25,7 +25,7 @@ namespace QR_Catalog.Droid
             if (imageData == null)
                 return;
 
-            string root = Application.Context.GetExternalFilesDir(null).ToString();
+            string root = Application.Context.GetExternalMediaDirs()[0].ToString();
             
             string docsPath = System.IO.Path.Combine(root, folderName);
             Directory.CreateDirectory(docsPath);
